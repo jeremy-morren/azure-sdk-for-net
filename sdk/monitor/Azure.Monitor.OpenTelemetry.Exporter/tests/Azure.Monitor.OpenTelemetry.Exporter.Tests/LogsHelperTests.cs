@@ -312,13 +312,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 roleName: "testRoleName",
                 roleInstance: "testRoleInstance",
                 serviceVersion: null,
-                monitorBaseData: null);
+                monitorBaseData: null,
+                new Dictionary<string, string>()
+                {
+                    {ContextTagKeys.AiDeviceId.ToString(), "testDeviceId"},
+                });
             var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), logResource, "Ikey");
 
             Assert.Equal(type, telemetryItem[0].Data.BaseType);
             Assert.Equal("Ikey", telemetryItem[0].InstrumentationKey);
             Assert.Equal(logResource.RoleName, telemetryItem[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Equal(logResource.RoleInstance, telemetryItem[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.Equal("testDeviceId", telemetryItem[0].Tags[ContextTagKeys.AiDeviceId.ToString()]);
         }
 
         [Theory]

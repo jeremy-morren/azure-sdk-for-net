@@ -54,5 +54,5 @@
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SemanticConventions.cs" LinkBase="Shared\Exporter" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\StringExtensions.cs" LinkBase="Shared\Exporter" />
   </ItemGroup>
-  
+
 </Project>

@@ -120,10 +120,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const int Tags_AiOperationId_MaxLength = 128;
         public const int Tags_AiOperationName_MaxLength = 1024;
         public const int Tags_AiOperationParentId_MaxLength = 512;
+        public const int Tags_AiOperationSyntheticSource_MaxLength = 1024; //TODO: Get the max length for this tag.
         public const int Tags_AiUserAuthUserId_MaxLength = 1024;
+        public const int Tags_AiSessionId_MaxLength = 1024; //TODO: Get the max length for this tag.
         public const int Tags_AiApplicationVer_MaxLength = 1024;
         public const int Tags_AiCloudRole_MaxLength = 256;
         public const int Tags_AiCloudRoleInstance_MaxLength = 256;
         public const int Tags_AiInternalSdkVersion_MaxLength = 64;
+
+        //TODO: Set the max length for the following tags.
+        public const int Tags_AiDeviceId_MaxLength = 64;
+        public const int Tags_AiDeviceLocale_MaxLength = 64;
+        public const int Tags_AiDeviceModel_MaxLength = 64;
+        public const int Tags_AiDeviceOemName_MaxLength = 64;
+        public const int Tags_AiDeviceOsVersion_MaxLength = 64;
+        public const int Tags_AiDeviceType_MaxLength = 64;
     }
 }

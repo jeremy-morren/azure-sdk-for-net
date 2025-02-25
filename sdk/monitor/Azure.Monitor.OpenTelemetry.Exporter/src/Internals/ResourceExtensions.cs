@@ -42,6 +42,7 @@ internal static class ResourceExtensions
         string? serviceInstance = null;
         string? serviceVersion = null;
         bool? hasDefaultServiceName = null;
+        Dictionary<string, string>? additionalTags = null;
 
         if (instrumentationKey != null && resource.Attributes.Any())
         {
@@ -83,8 +84,15 @@ internal static class ResourceExtensions
                 default:
                     if (attribute.Key.StartsWith("k8s"))
                     {
-                        aksResourceProcessor = aksResourceProcessor ?? new AksResourceProcessor();
+                        aksResourceProcessor ??= new AksResourceProcessor();
                         aksResourceProcessor.MapAttributeToProperty(attribute);
+                    }
+
+                    if (attribute.Key.StartsWith("device") &&
+                        KnownResourceAttributesProcessor.TryMapAttribute(attribute, out var key, out var value))
+                    {
+                        additionalTags ??= new Dictionary<string, string>();
+                        additionalTags[key] = value;
                     }
                     break;
             }
@@ -158,10 +166,15 @@ internal static class ResourceExtensions
             };
         }
 
+#if NET6_0_OR_GREATER
+        additionalTags?.TrimExcess();
+#endif
+
         return new AzureMonitorResource(
             roleName: roleName,
             roleInstance: roleInstance,
             serviceVersion: serviceVersion,
-            monitorBaseData: monitorBaseData);
+            monitorBaseData: monitorBaseData,
+            additionalTags: additionalTags);
     }
 }

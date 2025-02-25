@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -85,6 +85,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiApplicationVer.ToString()] = telemetryItem.Tags[ContextTagKeys.AiApplicationVer.ToString()].Truncate(SchemaConstants.Tags_AiApplicationVer_MaxLength);
             InstrumentationKey = telemetryItem.InstrumentationKey;
 
+            CopyAdditionalTags(telemetryItem.Tags);
+
             if (telemetryItem.SampleRate != 100f)
             {
                 SampleRate = telemetryItem.SampleRate;
@@ -126,6 +128,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = resource?.RoleInstance_Truncated;
             Tags[ContextTagKeys.AiApplicationVer.ToString()] = resource?.ServiceVersion_Truncated;
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
+            CopyAdditionalTags(resource?.AdditionalTags);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void CopyAdditionalTags(IDictionary<string, string>? additionalTags)
+        {
+            if (additionalTags == null)
+            {
+                return;
+            }
+
+            KnownResourceAttributesProcessor.CopyTags(additionalTags, Tags);
         }
 
         internal static DateTimeOffset FormatUtcTimestamp(System.DateTime utcTimestamp)

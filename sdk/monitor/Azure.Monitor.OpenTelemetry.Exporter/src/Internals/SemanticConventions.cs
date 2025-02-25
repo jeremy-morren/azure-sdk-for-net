@@ -163,5 +163,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         // Messaging v1.21.0 https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/messaging.md
         public const string AttributeMessagingDestinationName = "messaging.destination.name";
         public const string AttributeNetworkProtocolName = "network.protocol.name";
+
+        public const string AttributeDeviceType = "device.type"; // TODO: Submit issue to OpenTelemetry to add this attribute to the specification
+
+        //Device v1.30.0 https://github.com/open-telemetry/semantic-conventions/blob/v1.30.0/docs/resource/device.md
+        public const string AttributeDeviceId = "device.id";
+        public const string AttributeDeviceManufacturer = "device.manufacturer";
+        public const string AttributeDeviceIdentifier = "device.identifier";
+        public const string AttributeDeviceModelId = "device.model.identifier";
+        public const string AttributeDeviceModelName = "device.model.name";
+
+        // Browser v1.30.0 https://github.com/open-telemetry/semantic-conventions/blob/v1.30.0/docs/resource/browser.md
+        public const string AttributeBrowserBrands = "browser.brands";
+        public const string AttributeBrowserLanguage = "browser.language";
+        public const string AttributeBrowserMobile = "browser.mobile";
+        public const string AttributeBrowserPlatform = "browser.platform";
+
+        // Operating System v1.30.0 https://github.com/open-telemetry/semantic-conventions/blob/v1.30.0/docs/resource/os.md
+        public const string AttributeOsType = "os.type";
+        public const string AttributeOsBuildId = "os.build.id";
+        public const string AttributeOsDescription = "os.description";
+        public const string AttributeOsName = "os.name";
+        public const string AttributeOsVersion = "os.version";
     }
 }
