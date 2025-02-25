@@ -14,7 +14,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class TelemetryItem
     {
         public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float sampleRate) :
-            this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
+            this(
+                activity.GetTelemetryType() switch
+                {
+                    TelemetryType.Request => "Request",
+                    TelemetryType.Dependency => "RemoteDependency",
+                    TelemetryType.PageViewEvent => "PageView",
+                    _ => throw new InvalidOperationException("Unsupported telemetry type")
+                },
+                FormatUtcTimestamp(activity.StartTimeUtc))
         {
             if (activity.ParentSpanId != default)
             {

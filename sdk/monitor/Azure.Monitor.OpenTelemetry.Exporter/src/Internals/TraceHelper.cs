@@ -62,6 +62,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor),
                             };
                             break;
+                        case TelemetryType.PageViewEvent:
+                            telemetryItem.Data = new MonitorBase
+                            {
+                                BaseType = "PageViewData",
+                                BaseData = new PageViewData(Version, activity),
+                            };
+                            break;
                     }
 
                     activityTagsProcessor.Return();

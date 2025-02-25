@@ -353,6 +353,40 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Request", telemetryItems[0].Name);
         }
 
+        [Fact]
+        public void PageViewActivityShouldCreatePageViewData()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                name: ActivityName,
+                kind: ActivityKind.Internal,
+                tags:
+                [
+                    new("event", PageViewData.EventTypePageView),
+                    new("title", "Page Title"),
+                    new("url", "http://localhost"),
+                    new("referrer", "http://localhost/referrer")
+                ]);
+
+            Assert.NotNull(activity);
+            Assert.True(PageViewData.IsPageView(activity));
+            Assert.Equal(TelemetryType.PageViewEvent, activity.GetTelemetryType());
+
+            Activity[] activityList = new Activity[1];
+            activityList[0] = activity;
+            Batch<Activity> batch = new Batch<Activity>(activityList, 1);
+            var traceResource = new AzureMonitorResource();
+
+            var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, traceResource, "00000000 - 0000 - 0000 - 0000 - 000000000000", 1.0f);
+
+            Assert.Single(telemetryItems);
+            Assert.Equal("PageView", telemetryItems[0].Name);
+            var data = Assert.IsType<PageViewData>(telemetryItems[0].Data.BaseData);
+            Assert.Equal("Page Title", data.Name);
+            Assert.Equal("http://localhost", data.Url);
+            Assert.Equal("http://localhost/referrer", data.ReferredUri);
+        }
+
         private string? GetExpectedMSlinks(IEnumerable<ActivityLink> links)
         {
             if (links != null && links.Any())

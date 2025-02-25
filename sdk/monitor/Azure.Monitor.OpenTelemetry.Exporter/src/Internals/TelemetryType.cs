@@ -9,6 +9,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         Dependency,
         Message,
         Event,
-        Metric
+        Metric,
+        PageViewEvent
     }
 }

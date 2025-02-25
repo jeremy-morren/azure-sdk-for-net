@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const int PageViewData_Properties_MaxKeyLength = KVP_MaxKeyLength;
         public const int PageViewData_Properties_MaxValueLength = KVP_MaxValueLength;
         public const int PageViewData_Measurements_MaxKeyLength = KVP_MaxKeyLength;
-        public const int PageViewData_Duration_LessThanDays = 1000;
+        public static readonly TimeSpan PageViewData_Duration_LessThanDays = TimeSpan.FromDays(1000);
 
         // TODO: PageViewPerfData is currently not in use (2022-06-10).
         public const int PageViewPerfData_Id_MaxLength = 512;

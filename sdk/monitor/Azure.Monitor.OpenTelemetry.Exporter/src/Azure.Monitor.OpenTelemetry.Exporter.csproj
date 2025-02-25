@@ -26,8 +26,5 @@
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Internals\ResourceProcessors\" />
-  </ItemGroup>
 
 </Project>
