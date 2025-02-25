@@ -20,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <summary>
         /// Returns true if the activity is a PageView (i.e. has tag <c>event</c> with value <c>browser.page_view</c>).
         /// </summary>
-        public static bool IsPageView(Activity activity) => activity.GetTagItem("event") is EventTypePageView;
+        public static bool IsPageView(Activity activity) => activity.OperationName is EventTypePageView or "PageView";
 
         public PageViewData(int version, string id, string displayName, TimeSpan duration, string? title, string? url, string? referredUri)
             : base(version)

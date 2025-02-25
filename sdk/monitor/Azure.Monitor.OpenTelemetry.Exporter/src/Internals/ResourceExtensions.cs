@@ -88,8 +88,7 @@ internal static class ResourceExtensions
                         aksResourceProcessor.MapAttributeToProperty(attribute);
                     }
 
-                    if (attribute.Key.StartsWith("device") &&
-                        KnownResourceAttributesProcessor.TryMapAttribute(attribute, out var key, out var value))
+                    if (KnownResourceAttributesProcessor.TryMapAttribute(attribute, out var key, out var value))
                     {
                         additionalTags ??= new Dictionary<string, string>();
                         additionalTags[key] = value;

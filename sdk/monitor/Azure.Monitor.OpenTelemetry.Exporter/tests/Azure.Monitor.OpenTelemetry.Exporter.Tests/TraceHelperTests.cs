@@ -353,16 +353,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Request", telemetryItems[0].Name);
         }
 
-        [Fact]
-        public void PageViewActivityShouldCreatePageViewData()
+        [Theory]
+        [InlineData("PageView")]
+        [InlineData(PageViewData.EventTypePageView)]
+        public void PageViewActivityShouldCreatePageViewData(string activityName)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
-                name: ActivityName,
+                name: activityName,
                 kind: ActivityKind.Internal,
                 tags:
                 [
-                    new("event", PageViewData.EventTypePageView),
                     new("title", "Page Title"),
                     new("url", "http://localhost"),
                     new("referrer", "http://localhost/referrer")

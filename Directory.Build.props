@@ -39,5 +39,10 @@
     <RequiredTargetFrameworks>import-required-properties</RequiredTargetFrameworks>
   </PropertyGroup>
 
+  <!-- Page view overrides -->
+  <PropertyGroup>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder Condition="'$(EmbedAllSources)' == 'true'">$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
   <Import Project="$(RepoEngPath)\Directory.Build.Common.props" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
 </Project>
